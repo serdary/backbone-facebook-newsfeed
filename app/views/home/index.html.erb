@@ -1,0 +1,16 @@
+<h1>
+	<a href="#">My Facebook Feeds</a>
+</h1>
+
+<div id="notice"></div>
+<div id="app"></div>
+
+<script type="text/javascript">
+    $(function() {
+        App.init();
+    });
+</script>
+
+<% unless @user_logged_in %>
+	<%= link_to 'Connect Facebook', sessions_connect_fb_path, { :class => 'fb_connect_btn' } %>
+<% end %>
