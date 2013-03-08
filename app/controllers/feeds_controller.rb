@@ -26,7 +26,6 @@ class FeedsController < ApplicationController
       graph = Koala::Facebook::API.new(session[:fb_access_token])
       obj_id = graph.put_wall_post(params[:feed][:message])
       
-      #feed = create_feed_objects(graph.get_object(obj_id))[0]
       feed = {}
     rescue Exception => ex
       session[:fb_access_token] = nil

@@ -8,19 +8,24 @@ App.Routers.FeedsRouter = Backbone.Router.extend({
 	
 	routes: {
 		''      : 'index',
-		'/index': 'index',
-		'/new'  : 'newFeed',
-		'/:id'  : 'show'
+		'index': 'index',
+		'new'  : 'newFeed',
+		':id'  : 'show'
 	},
 	
 	index: function() {
+		$("#loader").show();
+		$('#app').html("");
+
 		feeds.fetch({
 			success: function() {
 				var view = new App.Views.IndexView({ feeds: feeds });
 				$('#app').html(view.render().el);
+				$("#loader").hide();
 			},
 			error: function() {
 				new Error({ message: "Error loading feeds" });
+				$("#loader").hide();
 			}
 		});
 	},

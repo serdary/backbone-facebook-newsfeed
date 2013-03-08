@@ -5,3 +5,9 @@
  *= require_self
  *= require_tree . 
 */
+#loader {
+    background-image: url("loading.gif");
+    display: none;
+    width: 32px;
+    height: 32px;
+}
