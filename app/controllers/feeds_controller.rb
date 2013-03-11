@@ -43,11 +43,27 @@ class FeedsController < ApplicationController
       from_name = feed['from'].is_a?(Hash) ? feed['from']['name'] : ''
       from_id = feed['from'].is_a?(Hash) ? feed['from']['id'] : ''
       like_count = feed['likes'].is_a?(Hash) ? feed['likes']['count'] : 0
-      message = (feed['type'] == 'link' or feed['message'].blank?) ? feed['story'] : feed['message']
-      
+      message = create_feed_message feed
+
       feeds.push({ :id => feed['id'], :from_name => from_name, :from_id => from_id, :like_count => like_count, 
         :feed_type => feed['type'], :message => message })
     end
     feeds
+  end
+
+  def create_feed_message(feed)
+    if feed['message'].blank?
+      if feed['story'].blank?
+        if feed['type'] == "link" and !feed["application"].blank? and feed["application"].is_a?(Hash)
+          "Shared a link on #{feed["application"]["name"]}"
+        else
+          "Shared a link"
+        end
+      else
+        feed['story']
+      end
+    else
+      feed['message']
+    end
   end
 end
