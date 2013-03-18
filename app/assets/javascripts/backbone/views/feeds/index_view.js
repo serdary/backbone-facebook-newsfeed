@@ -8,22 +8,30 @@ App.Views.IndexView = Backbone.View.extend({
     		$(this.el).find("tbody").append('no feeds yet');
     		return;
 		}
-		// TODO: use haml-js or jquery templates
+
+		for (var i = 0; i < this.feeds.models.length; i++)
+			this.addOne(this.feeds.models[i].attributes);
+	},
+
+	addOne: function(feed) {
+
 		var view = '';
 		var template = '<tr><td>[from_name]</td><td>[message]</td><td>[feed_type]</td><td>[like_count]</td><td><a href="#/[id]">Show</td></tr>';
-		for (var i = 0; i < this.feeds.models.length; i++) {
-			var feed = this.feeds.models[i].attributes;
-			view += template.replace('[from_name]', feed.from_name).replace('[message]', feed.message)
-				.replace('[feed_type]', feed.feed_type).replace('[like_count]', feed.like_count).replace('[id]', feed.id);
-		}
+		view = template.replace('[from_name]', feed.from_name).replace('[message]', feed.message)
+			.replace('[feed_type]', feed.feed_type).replace('[like_count]', feed.like_count).replace('[id]', feed.id);
 		
-    	$(this.el).find("tbody").append(view);
+    $(this.el).find("tbody").append(view);
+/*
+
+		var view = new App.Views.FeedView({ model: feed });
+		$(this.el).find("tbody").append(view.render().el);*/
 	},
 	
 	render: function() {
-		var table = '<h1>Feeds</h1><a href="#/new">New Feed</a><table><tr><th>From</th><th>Message</th><th>Type</th><th>Like count</th></tr></table>';
-		$(this.el).html(table);
+		var template = JST["backbone/templates/feeds/index"];
+    $(this.el).html(template)
+
 		this.addAll();
-		return this; // chain
+		return this;
 	}
 });

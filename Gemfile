@@ -20,6 +20,8 @@ gem 'jquery-rails'
 
 gem "koala"
 
+gem 'rails-backbone'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

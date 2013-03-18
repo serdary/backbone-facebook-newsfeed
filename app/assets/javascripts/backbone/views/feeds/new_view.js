@@ -9,9 +9,8 @@ App.Views.NewView = Backbone.View.extend({
 	},
 	
 	render: function() {
-		var template = '<h1>New feed</h1><form id="new-feed" name="feed"><div><b> message:</b><input type="text" name="message" id="message" /></div><div><input type="submit" value="Create Feed" /></div></form><a href="#">Home</a>';
-		
-		$(this.el).html(template);
+		var template = JST["backbone/templates/feeds/new"];
+    $(this.el).html(template(this.model.attributes))
 		return this;
 	},
 	
